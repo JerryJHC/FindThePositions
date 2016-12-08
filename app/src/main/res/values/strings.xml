@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">FindThePositions</string>
+    <string name="btnStart">Iniciar</string>
+    <string name="instruccion">Localice los %$1s por medio de la brújula interna</string>
+    <string name="list_button_text">VER MAPA</string>
+</resources>
