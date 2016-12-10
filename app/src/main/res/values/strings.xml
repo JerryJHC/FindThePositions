@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">FindThePositions</string>
-    <string name="btnStart">Iniciar</string>
-    <string name="instruccion">Localice los %$1s por medio de la brújula interna</string>
-    <string name="list_button_text">VER MAPA</string>
+    <string name="start_button_text">Iniciar</string>
+    <string name="instruccion">Localice los %1$2s objetos por medio de la brújula interna</string>
+    <string name="loadXML_button_text">Cargar XML</string>
+    <string name="list_button_text">VER LISTA DE OBJETOS</string>
 </resources>
