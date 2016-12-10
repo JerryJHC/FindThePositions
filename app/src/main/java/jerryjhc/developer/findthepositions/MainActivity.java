@@ -8,7 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
-public class MainActivity extends FragmentActivity implements View.OnClickListener {
+public class MainActivity extends FragmentActivity
+        implements MainScreenFragment.MainScreenButtonListener
+{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,14 +30,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         }
 
-        Button listButton = (Button) findViewById(R.id.list_button);
-        listButton.setOnClickListener(this);
-
     }
 
-    @Override
-    public void onClick(View view) {
-
+    public void transactionFragment(){
         ObjectListFragment objectListFragment = new ObjectListFragment();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -45,4 +42,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         transaction.commit();
     }
+
+
 }
