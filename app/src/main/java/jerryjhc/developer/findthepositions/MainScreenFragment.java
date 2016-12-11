@@ -22,9 +22,8 @@ import jerryjhc.developer.findthepositions.R;
 public class MainScreenFragment extends Fragment implements View.OnClickListener {
 
     Button list_button, loadXML_button, start_button;
-    TextView instruccion;
+    TextView instruccion, degrees;
     MainScreenButtonListener mCallback;
-
 
     @Nullable
     @Override
@@ -36,11 +35,13 @@ public class MainScreenFragment extends Fragment implements View.OnClickListener
         loadXML_button = (Button) view.findViewById(R.id.loadXML_button);
         loadXML_button.setOnClickListener(this);
 
-        start_button = (Button)view.findViewById(R.id.start_button);
+        start_button = (Button) view.findViewById(R.id.start_button);
         start_button.setEnabled(false);
 
         instruccion = (TextView) view.findViewById(R.id.instruccion);
-        instruccion.setText(String.format(getString(R.string.instruccion), new String("1")));
+        instruccion.setText(String.format(getString(R.string.instruccion), new String("?")));
+
+        degrees = (TextView) view.findViewById(R.id.degrees);
 
         if (args != null)
             list_button.setOnClickListener(this);
@@ -64,6 +65,7 @@ public class MainScreenFragment extends Fragment implements View.OnClickListener
 
     public interface MainScreenButtonListener {
         public void transactionFragment();
+
         public void callLoadXML();
     }
 
@@ -75,9 +77,13 @@ public class MainScreenFragment extends Fragment implements View.OnClickListener
                 break;
 
             case R.id.loadXML_button:
-                //mCallback.callLoadXML();
+                mCallback.callLoadXML();
                 loadXML_button.setEnabled(false);
                 break;
         }
+    }
+
+    public void setCoordinates(float orientation) {
+        degrees.setText("Degrees: " + Math.round( ( (Math.toDegrees(orientation) + 360) % 360 ) ) );
     }
 }

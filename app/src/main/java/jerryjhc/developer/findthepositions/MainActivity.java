@@ -1,6 +1,7 @@
 package jerryjhc.developer.findthepositions;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.XmlResourceParser;
 import android.hardware.Sensor;
@@ -18,25 +19,25 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends FragmentActivity
         implements MainScreenFragment.MainScreenButtonListener,
-        SensorEventListener
-{
+        SensorEventListener {
 
     MainScreenFragment mainScreenFragment;
     ObjectListFragment objectListFragment;
-    private List<String> posiciones;
-    private List<String> situaciones;
+    private ArrayList<String> posiciones;
+    private ArrayList<String> situaciones;
 
     SensorManager sensorManager;
     Sensor acelerometer, magneticField;
-    float[] mGravity,mGeomagnetic;
-    float azimut,roll,pitch;
+    float[] mGravity, mGeomagnetic;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,10 +49,6 @@ public class MainActivity extends FragmentActivity
 
         Bundle args = new Bundle();
         if (findViewById(R.id.fragment_container) != null) {
-
-            if (savedInstanceState != null) {
-                return;
-            }
 
             args.putBoolean("Fragment", true);
             mainScreenFragment.setArguments(args);
@@ -69,13 +66,13 @@ public class MainActivity extends FragmentActivity
     @Override
     protected void onResume() {
         super.onResume();
-        sensorManager.registerListener(this,acelerometer,SensorManager.SENSOR_DELAY_FASTEST);
-        sensorManager.registerListener(this,magneticField,SensorManager.SENSOR_DELAY_FASTEST);
+        sensorManager.registerListener(this, acelerometer, SensorManager.SENSOR_DELAY_FASTEST);
+        sensorManager.registerListener(this, magneticField, SensorManager.SENSOR_DELAY_FASTEST);
     }
 
     @Override
     protected void onStop() {
-        super.onStop();
+        super.onPause();
         sensorManager.unregisterListener(this);
     }
 
@@ -92,42 +89,29 @@ public class MainActivity extends FragmentActivity
 
     @Override
     public void callLoadXML() {
-        XmlResourceParser parser = getResources().getXml(R.xml.positions);
+        XmlResourceParser xpp = getResources().getXml(R.xml.positions);
+        try {
+            int eventType = xpp.getEventType();
 
-        int eventType = -1;
-        //String nombre, situacion;
-
-        //try {
-            while (eventType != XmlResourceParser.END_DOCUMENT) {
-                if (eventType == XmlResourceParser.START_TAG) {
-                    String locationValue = parser.getName();
-
-                    if (locationValue.equals("posicion")) {
-
-                        if(parser.getName().equals("nombre")){
-                            posiciones.add(parser.getText());
-                        }
-                        if(parser.getName().equals("situacion")){
-                            situaciones.add(parser.getText());
-                        }
-
-                    }
+            while (eventType != XmlPullParser.END_DOCUMENT) {
+                if (eventType == XmlPullParser.START_DOCUMENT) {
+                    // do something
+                } else if (eventType == XmlPullParser.START_TAG) {
+                    // do something
+                } else if (eventType == XmlPullParser.END_TAG) {
+                    // do something
+                } else if (eventType == XmlPullParser.TEXT) {
+                    if (xpp.getName().equals("nombre"))
+                        posiciones.add(xpp.getText());
+                    if (xpp.getName().equals("situacion"))
+                        situaciones.add(xpp.getText());
                 }
-                try {
-                    eventType = parser.next();
-                } catch (XmlPullParserException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                eventType = xpp.next();
             }
 
-            //objectListFragment.setListObjects(posiciones);
-
-
-        //} catch (Exception e) {
-          //  Toast.makeText(getApplicationContext() , "XML Reader not supported : " + e.toString(), Toast.LENGTH_LONG).show();
-        //}
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Not supported : " + e.toString(), Toast.LENGTH_SHORT);
+        }
 
     }
 
@@ -145,16 +129,13 @@ public class MainActivity extends FragmentActivity
             if (success) {
                 float orientation[] = new float[3];
                 SensorManager.getOrientation(R, orientation);
-                azimut = orientation[0];
-                pitch = orientation[1];
-                roll = orientation[2];
-                Toast.makeText(this,"A: " + azimut + "P: " + pitch + "R: " + roll ,Toast.LENGTH_LONG).show();
+                mainScreenFragment.setCoordinates(orientation[0]);
             }
         }
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
-
+        //nothing
     }
 }

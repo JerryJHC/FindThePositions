@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ObjectListFragment extends Fragment {
@@ -34,8 +36,12 @@ public class ObjectListFragment extends Fragment {
         return view;
     }
 
-    public void setListObjects(List<String> posiciones){
-        ArrayAdapter<String> Adapter = new ArrayAdapter<String>( getActivity(), android.R.layout.simple_list_item_1, posiciones);
+    public void setListObjects(ArrayList<String> posiciones){
+        if(posiciones != null ) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, posiciones);
+        }else{
+            Toast.makeText(getActivity(),"posiciones vacio",Toast.LENGTH_SHORT);
+        }
     }
 
 }
