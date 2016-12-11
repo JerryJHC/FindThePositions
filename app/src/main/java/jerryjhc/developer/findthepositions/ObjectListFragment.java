@@ -17,17 +17,25 @@ public class ObjectListFragment extends Fragment {
 
     String[] msg = {"Not implemented"};
     View view;
+    ListView listView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         view = inflater.inflate(R.layout.object_list, container, false);
 
-        ListView listView = (ListView) view.findViewById(R.id.list_objects);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>( getActivity() ,android.R.layout.simple_list_item_1, msg);
-        listView.setAdapter(adapter);
+        if (savedInstanceState == null) {
+            listView = (ListView) view.findViewById(R.id.list_objects);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, msg);
+            listView.setAdapter(adapter);
+        }
 
         return view;
+    }
+
+    public void setListObjects(List<String> posiciones){
+        ArrayAdapter<String> Adapter = new ArrayAdapter<String>( getActivity(), android.R.layout.simple_list_item_1, posiciones);
     }
 
 }

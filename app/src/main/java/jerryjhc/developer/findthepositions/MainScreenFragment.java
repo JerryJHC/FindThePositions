@@ -1,6 +1,8 @@
 package jerryjhc.developer.findthepositions;
 
 import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,6 +25,7 @@ public class MainScreenFragment extends Fragment implements View.OnClickListener
     TextView instruccion;
     MainScreenButtonListener mCallback;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -31,7 +34,7 @@ public class MainScreenFragment extends Fragment implements View.OnClickListener
         list_button = (Button) view.findViewById(R.id.list_button);
 
         loadXML_button = (Button) view.findViewById(R.id.loadXML_button);
-        loadXML_button.setEnabled(false);
+        loadXML_button.setOnClickListener(this);
 
         start_button = (Button)view.findViewById(R.id.start_button);
         start_button.setEnabled(false);
@@ -61,6 +64,7 @@ public class MainScreenFragment extends Fragment implements View.OnClickListener
 
     public interface MainScreenButtonListener {
         public void transactionFragment();
+        public void callLoadXML();
     }
 
     @Override
@@ -68,6 +72,11 @@ public class MainScreenFragment extends Fragment implements View.OnClickListener
         switch (view.getId()) {
             case R.id.list_button:
                 mCallback.transactionFragment();
+                break;
+
+            case R.id.loadXML_button:
+                //mCallback.callLoadXML();
+                loadXML_button.setEnabled(false);
                 break;
         }
     }
