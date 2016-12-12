@@ -4,8 +4,8 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/main_background"
+    android:orientation="vertical"
     tools:context="jerryjhc.developer.findthepositions.MainActivity">
 
     <!-- Header app -->
@@ -37,19 +37,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="900"
+        android:layout_weight="450"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/instruccion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="h"
-            android:padding="10dp"
             android:layout_gravity="top"
-            android:textColor="#FFF"
-            />
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="h"
+            android:textColor="#FFF" />
 
         <Button
             android:id="@+id/list_button"
@@ -63,14 +62,39 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/start_button_text"/>
+            android:text="@string/start_button_text" />
 
         <Button
             android:id="@+id/loadXML_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/loadXML_button_text"/>
+            android:text="@string/loadXML_button_text" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="450"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="390"
+            android:src="@drawable/compass"/>
+
+        <TextView
+            android:id="@+id/degrees"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="60"
+            android:text="123"
+            android:textColor="#FF0000"
+            android:gravity="center"
+            android:textSize="30dp"/>
 
     </LinearLayout>
 

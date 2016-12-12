@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<posiciones>
+    <posicion>
+        <nombre>Objeto 1</nombre>
+        <situacion>45</situacion>
+    </posicion>
+    <posicion>
+        <nombre>Objeto 2</nombre>
+        <situacion>90</situacion>
+    </posicion>
+</posiciones>
