@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Xml;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -21,8 +22,10 @@ import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,12 +35,12 @@ public class MainActivity extends FragmentActivity
 
     MainScreenFragment mainScreenFragment;
     ObjectListFragment objectListFragment;
-    private ArrayList<String> posiciones;
-    private ArrayList<String> situaciones;
+    List<Posicion> posiciones;
 
     SensorManager sensorManager;
     Sensor acelerometer, magneticField;
     float[] mGravity, mGeomagnetic;
+    long degrees;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,31 +90,20 @@ public class MainActivity extends FragmentActivity
 
     }
 
-    @Override
-    public void callLoadXML() {
-        XmlResourceParser xpp = getResources().getXml(R.xml.positions);
-        try {
-            int eventType = xpp.getEventType();
+    public boolean callLoadXML() {
 
-            while (eventType != XmlPullParser.END_DOCUMENT) {
-                if (eventType == XmlPullParser.START_DOCUMENT) {
-                    // do something
-                } else if (eventType == XmlPullParser.START_TAG) {
-                    // do something
-                } else if (eventType == XmlPullParser.END_TAG) {
-                    // do something
-                } else if (eventType == XmlPullParser.TEXT) {
-                    if (xpp.getName().equals("nombre"))
-                        posiciones.add(xpp.getText());
-                    if (xpp.getName().equals("situacion"))
-                        situaciones.add(xpp.getText());
-                }
-                eventType = xpp.next();
-            }
-
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Not supported : " + e.toString(), Toast.LENGTH_SHORT);
+        InputStream in = getResources().openRawResource(R.raw.positions);
+        XMLPullParserPosicion parserPosicion = new XMLPullParserPosicion();
+        posiciones = parserPosicion.parse(in, getApplicationContext());
+        if (posiciones != null) {
+            PosicionAdapter posicionAdapter = new PosicionAdapter(this, R.layout.row_list_object, posiciones);
+            objectListFragment.setListObjects(posicionAdapter);
+            return true;
+        } else {
+            Toast.makeText(this, "No hay posiciones para leer", Toast.LENGTH_SHORT);
+            return false;
         }
+
 
     }
 
@@ -129,7 +121,8 @@ public class MainActivity extends FragmentActivity
             if (success) {
                 float orientation[] = new float[3];
                 SensorManager.getOrientation(R, orientation);
-                mainScreenFragment.setCoordinates(orientation[0]);
+                degrees = Math.round(((Math.toDegrees(orientation[0]) + 360) % 360));
+                mainScreenFragment.setCoordinates(degrees);
             }
         }
     }

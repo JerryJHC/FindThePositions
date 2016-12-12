@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -17,9 +16,9 @@ import java.util.List;
 
 public class ObjectListFragment extends Fragment {
 
-    String[] msg = {"Not implemented"};
     View view;
     ListView listView;
+    ArrayAdapter<Posicion> posicionArrayAdapter;
 
     @Nullable
     @Override
@@ -29,16 +28,21 @@ public class ObjectListFragment extends Fragment {
 
         if (savedInstanceState == null) {
             listView = (ListView) view.findViewById(R.id.list_objects);
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, msg);
-            listView.setAdapter(adapter);
+            Posicion posicion = new Posicion("Not implemented","0");
+            List<Posicion> posiciones = new ArrayList<Posicion>();
+            posiciones.add(posicion);
+            posicionArrayAdapter = new PosicionAdapter(getActivity(),R.layout.row_list_object, posiciones);
+            listView.setAdapter(posicionArrayAdapter);
         }
 
         return view;
     }
 
-    public void setListObjects(ArrayList<String> posiciones){
+    public void setListObjects(ArrayAdapter<Posicion> posiciones){
         if(posiciones != null ) {
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, posiciones);
+            posicionArrayAdapter = posiciones;
+            posicionArrayAdapter.notifyDataSetChanged();
+
         }else{
             Toast.makeText(getActivity(),"posiciones vacio",Toast.LENGTH_SHORT);
         }

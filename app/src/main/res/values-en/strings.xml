@@ -1,4 +1,5 @@
 <resources>
+    <string name="app_name">FindThePositions</string>
     <string name="start_button_text">Start</string>
     <string name="loadXML_button_text">Load XML</string>
     <string name="instruccion">Locate the %1$2s objects by means of the digital compass</string>
