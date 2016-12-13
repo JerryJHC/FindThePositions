@@ -4,14 +4,14 @@ package jerryjhc.developer.findthepositions;
 public class Posicion {
 
     private String nombre;
-    private String situacion;
+    private int situacion;
     private Boolean enc;
 
     public Posicion() {
         enc = false;
     }
 
-    public Posicion(String nombre, String situacion) {
+    public Posicion(String nombre, int situacion) {
         this.nombre = nombre;
         this.situacion = situacion;
     }
@@ -21,20 +21,25 @@ public class Posicion {
     }
 
     public void setSituacion(String situacion) {
-        this.situacion = situacion;
+        this.situacion = Integer.parseInt(situacion);
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public String getSituacion() {
+    public int getSituacion() {
         return situacion;
     }
 
-    public Boolean getEnc(){
+    public Boolean getEnc() {
         return enc;
     }
+
+    public void setEnc(Boolean enc) {
+        this.enc = enc;
+    }
+
     @Override
     public String toString() {
         return "Posicion{" +

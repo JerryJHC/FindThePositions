@@ -46,7 +46,7 @@ public class XMLPullParserPosicion {
                 switch (eventType) {
                     case XmlPullParser.START_TAG:
 
-                        if (tagname.equalsIgnoreCase("employee")) {
+                        if (tagname.equalsIgnoreCase(KEY_POSITION)) {
                             posicion = new Posicion();
                         }
                         break;
