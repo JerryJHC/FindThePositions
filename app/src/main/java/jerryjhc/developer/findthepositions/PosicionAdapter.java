@@ -2,6 +2,8 @@ package jerryjhc.developer.findthepositions;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +47,7 @@ public class PosicionAdapter extends ArrayAdapter<Posicion> {
 
         Posicion posicion = data.get(position);
         posicionHolder.nom.setText(posicion.getNombre());
-        posicionHolder.enc.setText(""+posicion.getEnc());
+        posicionHolder.enc.setText((posicion.getEnc()) ? context.getString(R.string.encTrue) : context.getString(R.string.encFalse));
 
         return view;
     }

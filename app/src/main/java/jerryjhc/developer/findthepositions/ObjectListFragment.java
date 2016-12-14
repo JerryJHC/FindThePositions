@@ -19,19 +19,22 @@ import java.util.List;
 public class ObjectListFragment extends Fragment {
 
     PosicionAdapter posicionArrayAdapter;
+    List<Posicion> posiciones;
+    ListView list;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.object_list, container, false);
-        ListView list = (ListView) view.findViewById(R.id.list_objects);
-        InputStream in = getResources().openRawResource(R.raw.positions);
-        XMLPullParserPosicion parserPosicion = new XMLPullParserPosicion();
-        List<Posicion> posiciones = parserPosicion.parse(in, getActivity());
-        PosicionAdapter adapter = new PosicionAdapter(getContext(), R.layout.row_list_object, posiciones);
-        list.setAdapter(adapter);
+        posiciones = getArguments().getParcelableArrayList("posiciones");
+        list = (ListView) view.findViewById(R.id.list_objects);
+        posicionArrayAdapter = new PosicionAdapter(getContext(), R.layout.row_list_object, posiciones);
+        list.setAdapter(posicionArrayAdapter);
         return view;
     }
 
+    public void onChangeAdapter(){
+        posicionArrayAdapter.notifyDataSetChanged();
+    }
 
 }

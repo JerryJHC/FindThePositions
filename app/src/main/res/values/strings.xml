@@ -4,4 +4,8 @@
     <string name="instruccion">Localice los %1$2s objetos por medio de la brújula interna</string>
     <string name="loadXML_button_text">Cargar XML</string>
     <string name="list_button_text">VER LISTA DE OBJETOS</string>
+    <string name="encTrue">Encontrado</string>
+    <string name="encFalse">No encontrado</string>
+    <string name="titleEncontrado">Has encontrado un objeto!</string>
+    <string name="messageEncontrado">Encontraste !</string>
 </resources>

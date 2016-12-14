@@ -5,14 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <LinearLayout
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/activity_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:background="#000"
         android:orientation="vertical"
-        android:layout_weight="1"
         tools:context="jerryjhc.developer.findthepositions.MainActivity">
 
         <!-- Header app -->
@@ -78,17 +77,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="390"
-                android:src="@drawable/compass"/>
+                android:src="@drawable/compass" />
 
             <TextView
                 android:id="@+id/degrees"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="60"
+                android:gravity="center"
                 android:text="123"
                 android:textColor="#FF0000"
-                android:gravity="center"
-                android:textSize="30dp"/>
+                android:textSize="30dp" />
 
         </LinearLayout>
 
@@ -96,17 +95,11 @@
 
 
     <FrameLayout
+        android:id="@+id/largeframe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
 
-
-        <fragment
-            android:id="@+id/fragment_objectlist"
-            android:name="jerryjhc.developer.findthepositions.ObjectListFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout="@layout/object_list" />
 
     </FrameLayout>
 

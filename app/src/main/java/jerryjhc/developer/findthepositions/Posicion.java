@@ -1,7 +1,10 @@
 package jerryjhc.developer.findthepositions;
 
 
-public class Posicion {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Posicion implements Parcelable {
 
     private String nombre;
     private int situacion;
@@ -48,4 +51,32 @@ public class Posicion {
                 '}';
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(nombre);
+        dest.writeInt(situacion);
+        dest.writeString(enc.toString());
+    }
+
+    public static final Parcelable.Creator<Posicion> CREATOR
+            = new Parcelable.Creator<Posicion>() {
+        public Posicion createFromParcel(Parcel in) {
+            return new Posicion(in);
+        }
+
+        public Posicion[] newArray(int size) {
+            return new Posicion[size];
+        }
+    };
+
+    private Posicion(Parcel in) {
+        nombre = in.readString();
+        situacion = in.readInt();
+        enc = Boolean.parseBoolean(in.readString());
+    }
 }
