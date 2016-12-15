@@ -8,4 +8,6 @@
     <string name="encFalse">No encontrado</string>
     <string name="titleEncontrado">Has encontrado un objeto!</string>
     <string name="messageEncontrado">Encontraste !</string>
+    <string name="titleCongrat">¡Felicidades!</string>
+    <string name="messageCongrat">¡HAS ENCONTRADO TODOS LOS OBJETOS!</string>
 </resources>

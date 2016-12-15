@@ -1,9 +1,7 @@
 package jerryjhc.developer.findthepositions;
 
 import android.content.Context;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
-import android.content.res.XmlResourceParser;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -13,20 +11,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Xml;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
-import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
-
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,11 +32,12 @@ public class MainActivity extends FragmentActivity
 
     Button list_objects, loadXML;
     TextView instruccion, degreesTV;
+    ImageView aguja;
 
     Boolean act_LoadXML = true;
     Boolean act_frag = false;
 
-    String titleEnc, messageEnc;
+    String titleEnc, messageEnc, TITLECONGRAT, MESSAGECONGRAT;
 
     SensorManager sensorManager;
     Sensor acelerometer, magneticField;
@@ -58,6 +51,7 @@ public class MainActivity extends FragmentActivity
 
         loadXML = (Button) findViewById(R.id.loadXML_button);
         instruccion = (TextView) findViewById(R.id.instruccion);
+        aguja = (ImageView) findViewById(R.id.aguja);
 
         if (savedInstanceState != null)
             if (savedInstanceState.containsKey("act_LoadXML"))
@@ -70,23 +64,20 @@ public class MainActivity extends FragmentActivity
             posiciones = savedInstanceState.getParcelableArrayList("posiciones");
         }
 
+        if (findViewById(R.id.largeframe) == null) {
+            list_objects = (Button) findViewById(R.id.list_button);
+            if (!act_LoadXML)
+                list_objects.setOnClickListener(this);
+            else
+                list_objects.setEnabled(false);
+        }
+
         instruccion.setText(String.format(getString(R.string.instruccion), (act_LoadXML) ? "?" : posiciones.size()));
 
         if (findViewById(R.id.largeframe) != null && !act_LoadXML)
             transactionFragment();
 
         degreesTV = (TextView) findViewById(R.id.degrees);
-
-        Bundle args = new Bundle();
-        if (findViewById(R.id.list_button) != null) {
-
-            if (savedInstanceState != null) {
-                return;
-            }
-
-            list_objects = (Button) findViewById(R.id.list_button);
-
-        }
 
     }
 
@@ -98,6 +89,8 @@ public class MainActivity extends FragmentActivity
         magneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         titleEnc = getString(R.string.titleEncontrado);
         messageEnc = getString(R.string.messageEncontrado);
+        TITLECONGRAT = getString(R.string.titleCongrat);
+        MESSAGECONGRAT = getString(R.string.messageCongrat);
     }
 
     @Override
@@ -150,20 +143,22 @@ public class MainActivity extends FragmentActivity
                 if (success) {
                     float orientation[] = new float[3];
                     SensorManager.getOrientation(R, orientation);
+                    long degrees_old = degrees;
                     degrees = Math.round(((Math.toDegrees(orientation[0]) + 360) % 360));
                     degreesTV.setText("" + degrees + " º");
+
+                    RotateAnimation animation = new RotateAnimation(degrees_old, -degrees, Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF, 0.5f);
+                    animation.setDuration(1000);
+                    animation.setFillAfter(true);
+                    aguja.startAnimation(animation);
 
                     if (posiciones != null) {
 
                         for (Posicion posicion : posiciones) {
-                            if (degrees <= (posicion.getSituacion() + 10) && degrees >= (posicion.getSituacion() - 10)) {
+                            if (degrees <= (posicion.getSituacion() + 3) && degrees >= (posicion.getSituacion() - 3)) {
                                 if (!posicion.getEnc()) {
 
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                                    builder.setTitle(titleEnc);
-                                    builder.setMessage(messageEnc + posicion.getNombre() + "!");
-                                    AlertDialog alert = builder.create();
-                                    alert.show();
+                                    showNotif(titleEnc, messageEnc + posicion.getNombre() + "!");
                                     posicion.setEnc(true);
                                     transactionFragment();
                                     break;
@@ -171,11 +166,26 @@ public class MainActivity extends FragmentActivity
                             }
                         }
 
+                        int contNoEnc = 0;
+                        for (Posicion posicion : posiciones)
+                            if (!posicion.getEnc())
+                                contNoEnc++;
+                        if (contNoEnc == 0)
+                            showNotif(TITLECONGRAT, MESSAGECONGRAT);
+
                     }
 
                 }
             }
         }
+    }
+
+    public void showNotif(String titleEnc, String messageEnc) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(titleEnc);
+        builder.setMessage(messageEnc);
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     @Override
@@ -192,8 +202,17 @@ public class MainActivity extends FragmentActivity
                 posiciones = parserPosicion.parse(in, getApplicationContext());
                 instruccion.setText(String.format(getString(R.string.instruccion), "" + posiciones.size()));
                 loadXML.setEnabled(false);
+                if (list_objects != null) {
+                    list_objects.setEnabled(true);
+                    list_objects.setOnClickListener(this);
+                }
                 act_LoadXML = false;
                 transactionFragment();
+                break;
+            case R.id.list_button:
+                Intent intent = new Intent(this, ObjectListActivity.class);
+                intent.putExtra("posiciones", (ArrayList<? extends Parcelable>) posiciones);
+                startActivity(intent);
                 break;
         }
     }

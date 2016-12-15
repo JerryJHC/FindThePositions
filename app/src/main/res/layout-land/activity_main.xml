@@ -1,49 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:background="#000"
+    android:orientation="vertical"
+    tools:context="jerryjhc.developer.findthepositions.MainActivity">
 
-    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/activity_main"
+    <!-- Header app -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="#000"
-        android:orientation="vertical"
-        tools:context="jerryjhc.developer.findthepositions.MainActivity">
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:background="#FFF"
+        android:orientation="horizontal">
 
-        <!-- Header app -->
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="100"
-            android:background="#FFF"
-            android:orientation="horizontal">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="30"
+            android:src="@mipmap/ic_launcher" />
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="30"
-                android:src="@mipmap/ic_launcher" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="70"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="#0080FF"
+            android:textSize="20dp" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="70"
-                android:gravity="center"
-                android:text="@string/app_name"
-                android:textColor="#0080FF"
-                android:textSize="20dp" />
+    </LinearLayout>
+    <!-- Header app -->
 
-        </LinearLayout>
-        <!-- Header app -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        android:orientation="horizontal">
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="150"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
@@ -57,6 +58,14 @@
                 android:textColor="#FFF" />
 
             <Button
+                android:id="@+id/list_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="#D8D8D8"
+                android:text="@string/list_button_text" />
+
+            <Button
                 android:id="@+id/loadXML_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -67,10 +76,11 @@
 
         </LinearLayout>
 
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="450"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -111,14 +121,5 @@
 
     </LinearLayout>
 
-
-    <FrameLayout
-        android:id="@+id/largeframe"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
-
-
-    </FrameLayout>
 
 </LinearLayout>

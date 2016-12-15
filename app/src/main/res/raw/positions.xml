@@ -12,4 +12,19 @@
         <situacion>90</situacion>
     </posicion>
 
+    <posicion>
+        <nombre>Objeto 3</nombre>
+        <situacion>115</situacion>
+    </posicion>
+
+    <posicion>
+        <nombre>Objeto 4</nombre>
+        <situacion>157</situacion>
+    </posicion>
+
+    <posicion>
+        <nombre>Objeto 5</nombre>
+        <situacion>290</situacion>
+    </posicion>
+
 </posiciones>

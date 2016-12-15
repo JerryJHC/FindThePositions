@@ -75,21 +75,39 @@
         android:layout_weight="450"
         android:orientation="vertical">
 
-        <ImageView
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="390"
-            android:src="@drawable/compass"/>
+            android:layout_weight="390">
+
+            <ImageView
+                android:id="@+id/compass"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/compass" />
+
+            <ImageView
+                android:id="@+id/aguja"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/compass"
+                android:layout_alignLeft="@id/compass"
+                android:layout_alignRight="@id/compass"
+                android:layout_alignTop="@id/compass"
+                android:scaleType="fitXY"
+                android:src="@drawable/aguja" />
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/degrees"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="60"
+            android:gravity="center"
             android:text="123"
             android:textColor="#FF0000"
-            android:gravity="center"
-            android:textSize="30dp"/>
+            android:textSize="30dp" />
 
     </LinearLayout>
 
