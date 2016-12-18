@@ -4,4 +4,10 @@
     <string name="loadXML_button_text">Load XML</string>
     <string name="instruccion">Locate the %1$2s objects by means of the digital compass</string>
     <string name="list_button_text">SHOW OBJECT LIST</string>
+    <string name="encTrue">Found</string>
+    <string name="encFalse">Not Found</string>
+    <string name="titleEncontrado">You have found an object!</string>
+    <string name="messageEncontrado">You Found !</string>
+    <string name="titleCongrat">¡CONGRATULATIONS!</string>
+    <string name="messageCongrat">¡YOU HAVE FOUND ALL OBJECTS!</string>
 </resources>
